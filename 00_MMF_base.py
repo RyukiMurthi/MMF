@@ -1,8 +1,3 @@
-
-
-
-
-
 # checks that ticket name is not blank
 def not_blank (question):
     valid = False
@@ -19,14 +14,7 @@ def not_blank (question):
                 print("sorry - this can't be blank")
 
 
+# ******  Main Routine  ********
 
-
-
-
-
-
-
-
-
-    #get name (can't be blank)
-    name = not_blank("Name: ")
+#get name (can't be blank)
+name = not_blank("Name: ")
