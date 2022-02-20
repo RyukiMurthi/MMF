@@ -17,5 +17,5 @@ while name != "xxx" and count < MAX_TICKETS:
 if count == MAX_TICKETS:
     print ("You have sold all the available tickets!")
 else:
-    print ("You have sold {} tickets.   \n")
+    print ("You have sold {} tickets.   \n"
         "There are {} places still availabe".format (count, MAX_TICKETS - count))
