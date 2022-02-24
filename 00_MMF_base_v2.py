@@ -20,7 +20,7 @@ def not_blank (question):
 
 
 # checks for an integer between two values
-def int_check (question, low_num, high_num) :
+def int_check (question, low_num, high_num, error_msg) :
 
     error = "please enter a whole number between {} and {}".format (low_num, high_num)
    
@@ -34,7 +34,7 @@ def int_check (question, low_num, high_num) :
             if low_num <= response <= high_num:
                 return response
             else:
-                print(error)
+                print(error_msg)
                 return "invalid age"
                  
         # if an integer is not entered, display an error
@@ -62,7 +62,7 @@ while name != "xxx" and count < MAX_TICKETS:
         break
    
     # get age between 12 and 130
-    age = int_check("Age: ", 12, 130)
+    age = int_check("Age: ", 12, 130, "Sorry you need to be between 12 and 130 to buy a ticket.\n")
 
     if age == "invalid age":
         continue

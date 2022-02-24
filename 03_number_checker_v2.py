@@ -1,8 +1,8 @@
 # functions goes here
 
-def int_check (question, low_num, high_num) :
+def int_check (question) :
 
-    error = "please enter a whole number between {} and {}".format (low_num, high_num)
+    error = "please enter a whole number between that is more than 0".format (low_num, high_num)
    
     valid = False
     while not valid:
