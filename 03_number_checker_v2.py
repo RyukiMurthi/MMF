@@ -1,8 +1,9 @@
 # functions goes here
 
+# checks for an integer more than 0
 def int_check (question) :
 
-    error = "please enter a whole number between that is more than 0".format (low_num, high_num)
+    error = "please enter a whole number between that is more than 0"
    
     valid = False
     while not valid:
@@ -11,15 +12,23 @@ def int_check (question) :
         try:
             response = int (input(question))
 
-            if low_num <= response <= high_num:
-                return response
+            if response <= 0:
+                print (error)
             else:
-                print(error)
-                 
-        # if an integer is not entered, display an error
+                return response
+
         except ValueError:
             print (error)
 
+valid_age = 0
+while valid_age == 0:
+    age = int_check ("Age: ")
 
-# main routine goes here
-age = int_check ("Age: ", 12, 130)
+    if age < 12:
+        print ("Sorry, youy are too young for this movie")
+        continue
+    elif age > 130:
+        print ("That must be a mistake, you are too old")
+        continue
+    else:
+        break
