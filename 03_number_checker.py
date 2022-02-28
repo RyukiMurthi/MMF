@@ -14,7 +14,7 @@ def int_check (question, low_num, high_num) :
             if low_num <= response <= high_num:
                 return response
             else:
-                print(error)
+                print (error)
                  
         # if an integer is not entered, display an error
         except ValueError:
