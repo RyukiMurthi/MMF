@@ -18,7 +18,7 @@ snack = ""
 # loop three times to make testing quicker
 for item in range (0, 3):
 
-    # ask user for desired snakc and put it in lower case
+    # ask user for desired snack and put it in lower case
     desired_snack = input ("Snack: ").lower()
     
     for var_list in valid_snacks:
