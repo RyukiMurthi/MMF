@@ -77,7 +77,7 @@ if len (snack_order) == 0:
     print ("snacks ordered: None")
 
 else:
-    print ("Snacks ordered")
+    print ("Snacks ordered: ")
 
     for item in snack_order:
         print (item)
