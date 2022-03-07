@@ -1,4 +1,4 @@
-
+import re
 
 # function goes here
 def string_check (choice, options):
@@ -24,6 +24,9 @@ def string_check (choice, options):
     else:
         return "invalid choice"
 
+
+ # regular expression to find if item starts with a number
+number_regex = "[1-9]"
 
 # valid snacks holds list of all snacks
 # each item in valid snacks is a list with
@@ -62,32 +65,40 @@ if check_snack == "Yes":
         if desired_snack == "xxx":
             break
 
+        # if item has a number, separate it into two (number / item)
+        if re.match (number_regex, desired_snack):
+            amount = int (desired_snack[0])
+            desired_snack = desired_snack [1:]
+
+        else:
+            amount = 1
+            desired_snack = desired_snack
+
+        # remove white space around the snack
+        desired_snack = desired_snack.strip()
+
         # check if snack is valid
         snack_choice = string_check(desired_snack, valid_snacks)
-        print ("Snack choice: ", snack_choice)
+        
+        # check snack amount is valid (less than 5)
+        if amount >= 5:
+            print ("Sorry - We have a four snack maximum")
+            snack_choice = "invalid choice"
 
-        # add snack to list...
+        # add snack and amount to list...
+        amount_snack = "{} {}".format (amount, snack_choice)
 
         # check that snack is not the exit code before adding
         if snack_choice != "xxx" and snack_choice != "invalid choice":
-            snack_order.append (snack_choice)
+            snack_order.append (amount_snack)
 
 # show snack orders
 print ()
 if len (snack_order) == 0:
-    print ("snacks ordered: None")
+    print ("Snacks ordered: None")
 
 else:
     print ("Snacks ordered: ")
 
-    for item in snack_order:
-        print (item)
-
-# loop six times to make testing quicker
-for item in range (0, 6):
-
-
-
-    # check if snack is valid
-    snack_choice = string_check (desired_snack, valid_snacks)
-    print ("Snack choice: ", snack_choice)
+    for desired_snack in snack_order:
+        print (desired_snack)
