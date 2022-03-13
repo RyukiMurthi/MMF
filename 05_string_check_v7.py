@@ -129,6 +129,3 @@ else:
 
     print (get_order)
 
-
-
-
