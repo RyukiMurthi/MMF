@@ -145,3 +145,4 @@ if ticket_count == MAX_TICKETS:
 elif ticket_count > 1:
     print ("You have sold {} tickets. There were {} tickets available")
     print ("You have sold {} tickets. There were 4 tickets available")
+    
