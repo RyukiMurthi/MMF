@@ -47,7 +47,7 @@ while name != "xxx":
     # ask for payment method
     how_pay = "invalid choice"
     while how_pay == "invalid choice":
-        how_pay = input ("Please choose a payment method (CASH or CREDIT): ")
+        how_pay = input ("Please choose a payment method (CASH or CREDIT): ").lower()
         how_pay = string_check (how_pay, pay_method)
 
 
