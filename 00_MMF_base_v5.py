@@ -203,6 +203,9 @@ orange_juice = []
 
 snack_lists = [popcorn, mms, pita_chips, water, orange_juice]
 
+# store surcharge multiplier
+surcharge_mult_list = []
+
 # data frame dictionary
 movie_data_dict = {
     'Name': all_names,
@@ -211,7 +214,8 @@ movie_data_dict = {
     'Water': water,
     'Pita Chips': pita_chips,
     'M&Ms' : mms,
-    'Orange Juice': orange_juice
+    'Orange Juice': orange_juice,
+    'Surcharge_multiplier': surcharge_mult_list
     }
 
 # cost of each snack
@@ -288,6 +292,8 @@ while name != "xxx" and ticket_count < MAX_TICKETS:
     else:
         surcharge_multiplier = 0
 
+    surcharge_mult_list.append(surcharge_multiplier)
+
 # print details
 # create data frame and set index to name column
 movie_frame = pandas.DataFrame (movie_data_dict)
@@ -304,10 +310,31 @@ movie_frame ["Sub Total"] = \
     movie_frame ['M&Ms'] *price_dict ['M&Ms'] + \
     movie_frame ['Orange Juice'] *price_dict ['Orange Juice']
 
-#shorten column names
-movie_frame = movie_frame.rename (columns = {'Orange Juice': 'OJ', 'Pita Chips': 'Chips'})
+movie_frame ["Surcharge"] = \
+    movie_frame ["Sub Total"] *movie_frame ["Surcharge_multiplier"]
+movie_frame ["Total"] = movie_frame ["Sub Total"] + \
+    movie_frame['Surcharge']
 
-print (movie_frame)
+
+#shorten column names
+movie_frame = movie_frame.rename (columns = {'Orange Juice': 'OJ',
+                                             'Pita Chips': 'Chips',
+                                             'Surchare_multiplier': 'Sm'})
+
+# set up columns to be printed...
+pandas.set_option ('display.max_columns', None)
+
+# display numbers to 2 d.p.
+pandas.set_option('precision', 2)
+
+print_all = input ("Print all columns?? (y) for yes")
+if print_all == "y":
+    print (movie_frame)
+else:
+    print (movie_frame [['Ticket', 'Sub Total',
+                         'Surcharge', 'Total']])
+
+print ()
 
 # calculate ticket profit
 ticket_profit = ticket_sales - (5 * ticket_count)
