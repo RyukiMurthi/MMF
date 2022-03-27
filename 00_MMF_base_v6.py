@@ -206,6 +206,12 @@ snack_lists = [popcorn, mms, pita_chips, water, orange_juice]
 # store surcharge multiplier
 surcharge_mult_list = []
 
+# lists to store summary data...
+summary_headings = ["Popcorn", "M&Ms", "Pita Chips", "Water",
+                    "Orange Juice", "Snack profit", "Ticket Profit",
+                    "Total Profit"]
+summary_data = []
+
 # data frame dictionary
 movie_data_dict = {
     'Name': all_names,
@@ -217,6 +223,13 @@ movie_data_dict = {
     'Orange Juice': orange_juice,
     'Surcharge_multiplier': surcharge_mult_list
     }
+
+# summary dictionary
+summary_data_dict = {
+    'Item': summary_headings,
+    'Amount': summary_data
+}
+
 
 # cost of each snack
 price_dict = {
@@ -302,16 +315,20 @@ movie_frame = movie_frame.set_index ('Name')
 # create column called 'sub total'
 # fill it price for snacks and ticket
 
-movie_frame ["Sub Total"] = \
-    movie_frame ['Ticket'] + \
+movie_frame ["Snacks"] = \
     movie_frame ['Popcorn'] *price_dict ['Popcorn'] + \
     movie_frame ['Water'] *price_dict ['Water'] + \
     movie_frame ['Pita Chips'] *price_dict ['Pita Chips'] + \
     movie_frame ['M&Ms'] *price_dict ['M&Ms'] + \
     movie_frame ['Orange Juice'] *price_dict ['Orange Juice']
 
+movie_frame ["Sub Total"] = \
+    movie_frame ['Ticket'] + \
+    movie_frame ['Snacks']
+
 movie_frame ["Surcharge"] = \
     movie_frame ["Sub Total"] *movie_frame ["Surcharge_multiplier"]
+    
 movie_frame ["Total"] = movie_frame ["Sub Total"] + \
     movie_frame['Surcharge']
 
@@ -320,6 +337,26 @@ movie_frame ["Total"] = movie_frame ["Sub Total"] + \
 movie_frame = movie_frame.rename (columns = {'Orange Juice': 'OJ',
                                              'Pita Chips': 'Chips',
                                              'Surchare_multiplier': 'Sm'})
+
+# set up summary data frame
+# populate snack items...
+for item in snack_lists:
+    # sums items in each snack list
+    summary_data.append(sum(item))
+
+# get snack profit
+# get snack total from panda
+snack_total = movie_frame ['Snacks'].sum()
+snack_profit = snack_total *0.2
+summary_data.append(snack_profit)
+
+# get ticket profit and add to list
+ticket_profit = ticket_sales - (5 *ticket_count)
+summary_data.append(ticket_profit)
+
+# work out total profit and add to list
+total_profit = snack_profit + ticket_profit
+summary_data.append(total_profit)
 
 # set up columns to be printed...
 pandas.set_option ('display.max_columns', None)
