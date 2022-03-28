@@ -118,10 +118,10 @@ def get_snack ():
     # valid options for each snack <full name, letter code (a - e)
     # and possible abreviations etc>
     valid_snacks = [
-        ["popcorn", "p", "corn", "a"],
-        ["M&Ms", "m&ms", "mms", "m", "b"],
+        ["popcorn", "p", "pop,", "corn", "a"],
+        ["M&Ms", "m&ms", "mms", "mm", "m", "b"],
         ["pita chips", "chips", "pc", "pita", "c"],
-        ["water", "w", "d"],
+        ["water", "w", "h2o", "d"],
         ["orange juice", "oj", "o", "juice", "e"]
     ]
 
@@ -129,7 +129,7 @@ def get_snack ():
     snack_order = []
 
     desired_snack = ""
-    while desired_snack != "xxx":
+    while desired_snack != "xxx" or desired_snack != "n":
         
         snack_row = []
         
@@ -208,7 +208,7 @@ surcharge_mult_list = []
 
 # lists to store summary data...
 summary_headings = ["Popcorn", "M&Ms", "Pita Chips", "Water",
-                    "Orange Juice", "Snack profit", "Ticket Profit",
+                    "Orange Juice", "Snack Profit", "Ticket Profit",
                     "Total Profit"]
 summary_data = []
 
@@ -270,18 +270,10 @@ while name != "xxx" and ticket_count < MAX_TICKETS:
     all_names.append (name)
     all_tickets.append (ticket_price)
 
+    # get snacks
     # ask user if they want a snack
-    check_snack = "invalid choice"
-    while check_snack == "invalid choice":
-        want_snack = input ("Do you want to order snacks?: ").lower()
-        check_snack = string_check (want_snack, _yes_no)
+    snack_order = get_snack()
 
-    # if they say yes, ask what snacks they want (and add to our snack list)
-    if check_snack == "Yes":
-        snack_order = get_snack()
-
-    else:
-        snack_order = []
 
     # assume no snakcs have been purchased...
     for item in snack_lists:
@@ -358,28 +350,34 @@ summary_data.append(ticket_profit)
 total_profit = snack_profit + ticket_profit
 summary_data.append(total_profit)
 
+# create summary frame
+summary_frame = pandas.DataFrame (summary_data_dict)
+summary_frame = summary_frame.set_index ('Item')
+
 # set up columns to be printed...
 pandas.set_option ('display.max_columns', None)
 
 # display numbers to 2 d.p.
 pandas.set_option('precision', 2)
 
-print_all = input ("Print all columns?? (y) for yes")
-if print_all == "y":
-    print (movie_frame)
-else:
-    print (movie_frame [['Ticket', 'Sub Total',
-                         'Surcharge', 'Total']])
+print ()
+print ("*** Ticket / Snack Information ***")
+print ("Note: for full details, please see the excel file called 'Ticket_Summary'")
+print ()
+print (movie_frame [['Ticket', 'Snacks', 'Sub Total',
+                     'Surcharge', 'Total']])
 
 print ()
 
-# calculate ticket profit
-ticket_profit = ticket_sales - (5 * ticket_count)
-print ("Ticket profit: ${: .2f}".format(ticket_profit))
-
+print ("*** Snack / Profit Summary ***")
+print ()
+print (summary_frame)
+ 
 # tell user if they have unsold tickets
 if ticket_count == MAX_TICKETS:
     print ("You have sold all the available tickets")
-elif ticket_count > 1:
-    print ("You have sold {} tickets. There were {} tickets available".format(ticket_count, MAX_TICKETS - ticket_count))
+else:
+    print ("You have sold {} tickets.   \n"
+            "There are {} places still available"
+            .format(ticket_count, MAX_TICKETS - ticket_count))
     
