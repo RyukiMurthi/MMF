@@ -118,7 +118,7 @@ def get_snack ():
     # valid options for each snack <full name, letter code (a - e)
     # and possible abreviations etc>
     valid_snacks = [
-        ["popcorn", "p", "pop,", "corn", "a"],
+        ["popcorn", "p", "pop", "corn", "a"],
         ["M&Ms", "m&ms", "mms", "mm", "m", "b"],
         ["pita chips", "chips", "pc", "pita", "c"],
         ["water", "w", "h2o", "d"],
